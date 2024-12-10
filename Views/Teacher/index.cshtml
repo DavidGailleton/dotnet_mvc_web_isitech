@@ -27,19 +27,12 @@
                 <td><input type="text" name="lastname" value="@teacher.Lastname" class="input-group-text"></td>
                 <td><input type="number" name="age" value="@teacher.Age" class="input-group-text"></td>
                 <td>
-                    @*<select name="speciality" class="input-group-text">
-                        @{
-                            var enumValues = Enum.GetValues(typeof(Specialities));
-                        }
-                        @foreach (var enumValue: Specialities in enumValues)
-                        {
-                            if (@teacher.Speciality == enumValue)
-                            {
-                                
-                            }
-                            <option value=@enumValue>@enumValue.ToString()</option>
-                        }
-                    </select>*@
+                    <select name="speciality" class="input-group input-group-text">
+                        <option value="@Specialities.IT" id="@Specialities.IT-@teacher.PersonId">IT</option>
+                        <option value="@Specialities.CS" id="@Specialities.CS-@teacher.PersonId">CS</option>
+                        <option value="@Specialities.Other" id="@Specialities.Other-@teacher.PersonId">Other</option>
+                    </select>
+                    <script>document.getElementById("@teacher.Speciality-@teacher.PersonId").selected = "true"</script>
                 </td>
                 <td>
                     <input type="number" name="id" class="visually-hidden" value="@teacher.PersonId">
@@ -58,7 +51,14 @@
             <td><input type="text" name="firstname" class="input-group-text"></td>
             <td><input type="text" name="lastname" class="input-group-text"></td>
             <td><input type="number" name="age" class="input-group-text"></td>
-            <td><input type="text" name="speciality" class="input-group-text"></td>
+            <td>
+                <select name="speciality" class="input-group input-group-text">
+                    <option value="" selected disabled hidden>Selectionner une specialitée</option>
+                    <option value="@Specialities.IT">IT</option>
+                    <option value="@Specialities.CS">CS</option>
+                    <option value="@Specialities.Other">Other</option>
+                </select>
+            </td>
             <td><input type="submit" value="Créer" class="btn btn-success"></td>
             <td></td>
         </form>
