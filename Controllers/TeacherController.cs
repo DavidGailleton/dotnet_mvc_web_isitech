@@ -11,8 +11,20 @@ public class TeacherController : Controller
         new() { PersonId = 1, Firstname = "David", Lastname = "GAILLETON", Age = 20, Speciality = Specialities.CS }
     };
 
+    [HttpGet]
+    public ActionResult Add()
+    {
+        return View(Teachers);
+    }
+    
+    [HttpPost]
     public ActionResult Add(string firstname, string lastname, int age, Specialities speciality)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(Teachers);
+        }
+        
         int id = Teachers.Last().PersonId + 1;
         
         Teachers.Add(new Teacher() { PersonId = id, Firstname = firstname, Lastname = lastname.ToUpperInvariant(), Age = age, Speciality = speciality });
