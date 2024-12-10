@@ -7,10 +7,10 @@ public class StudentController : Controller
 {
     private static List<Student> students = new()
     {
-        new() {PersonId = 0, Firstname = "John", Lastname = "Doe"},
-        new() {PersonId = 0, Firstname = "John", Lastname = "Doe"},
-        new() {PersonId = 0, Firstname = "John", Lastname = "Doe"},
-        new() {PersonId = 0, Firstname = "John", Lastname = "Doe"},
+        new() {Id = 0, Firstname = "John", Lastname = "Doe"},
+        new() {Id = 0, Firstname = "John", Lastname = "Doe"},
+        new() {Id = 0, Firstname = "John", Lastname = "Doe"},
+        new() {Id = 0, Firstname = "John", Lastname = "Doe"},
     };
 
     public static void AddStudent(string Firstname, string Lastname, int Age)

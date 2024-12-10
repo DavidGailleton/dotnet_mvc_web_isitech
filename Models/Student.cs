@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MVC_cours_isitech.Models;
 
-[PrimaryKey("PersonId")]
+[PrimaryKey("Id")]
 public class Student : IPerson
 {    
     [Required]
-    public int PersonId { get; set; }
+    public int Id { get; set; }
     
     [Required]
     public string? Firstname { get; set; }

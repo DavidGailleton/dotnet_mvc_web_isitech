@@ -21,25 +21,25 @@
     {
         <tr>
             <form asp-controller="Teacher" asp-action="Edit">
-                <td>@teacher.PersonId</td>
+                <td>@teacher.Id</td>
                 <td><input type="text" name="firstname" value="@teacher.Firstname" class="input-group-text"></td>
                 <td><input type="text" name="lastname" value="@teacher.Lastname" class="input-group-text"></td>
                 <td><input type="number" name="age" value="@teacher.Age" class="input-group-text"></td>
                 <td>
                     <select name="speciality" class="input-group input-group-text">
-                        <option value="@Specialities.IT" id="@Specialities.IT-@teacher.PersonId">IT</option>
-                        <option value="@Specialities.CS" id="@Specialities.CS-@teacher.PersonId">CS</option>
-                        <option value="@Specialities.Other" id="@Specialities.Other-@teacher.PersonId">Other</option>
+                        <option value="@Specialities.IT" id="@Specialities.IT-@teacher.Id">IT</option>
+                        <option value="@Specialities.CS" id="@Specialities.CS-@teacher.Id">CS</option>
+                        <option value="@Specialities.Other" id="@Specialities.Other-@teacher.Id">Other</option>
                     </select>
-                    <script>document.getElementById("@teacher.Speciality-@teacher.PersonId").selected = "true"</script>
+                    <script>document.getElementById("@teacher.Speciality-@teacher.Id").selected = "true"</script>
                 </td>
                 <td>
-                    <input type="number" name="id" class="visually-hidden" value="@teacher.PersonId">
+                    <input type="number" name="id" class="visually-hidden" value="@teacher.Id">
                     <input type="submit" value="Modifier" class="btn btn-info">
                 </td>
             </form>
             <form asp-controller="Teacher" asp-action="Delete">
-                <input type="number" class="visually-hidden" name="id" value="@teacher.PersonId">
+                <input type="number" class="visually-hidden" name="id" value="@teacher.Id">
                 <td><input type="submit" value="Supprimer" class="btn btn-danger"></td>
             </form>
         </tr>

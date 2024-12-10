@@ -8,11 +8,11 @@ public enum Specialities
     IT = 0, CS = 1, Other = 3
 }
 
-[PrimaryKey("PersonId")]
+[PrimaryKey("Id")]
 public class Teacher : IPerson  
 {
     [Required]
-    public int PersonId { get; set; }
+    public int Id { get; set; }
     
     [Required]
     [MaxLength(20)]
