@@ -8,7 +8,7 @@ public class TeacherController : Controller
     public static List<Teacher> Teachers = new()
     {
         new() { PersonId = 0, Firstname = "Mounir", Lastname = "BENDHAMED", Age = 32, Speciality = Specialities.IT },
-        new() { PersonId = 1, Firstname = "Mounir", Lastname = "BENDHAMED", Age = 32, Speciality = Specialities.IT }
+        new() { PersonId = 1, Firstname = "David", Lastname = "GAILLETON", Age = 20, Speciality = Specialities.CS }
     };
 
     public ActionResult Add(string firstname, string lastname, int age, Specialities speciality)
