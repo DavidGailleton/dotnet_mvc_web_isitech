@@ -1,4 +1,4 @@
-namespace mvc.Models;
+namespace MVC_cours_isitech.Models;
 
 public class Student : IPerson
 {    

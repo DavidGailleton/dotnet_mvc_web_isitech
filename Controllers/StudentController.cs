@@ -1,8 +1,7 @@
-using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Mvc;
-using mvc.Models;
+using MVC_cours_isitech.Models;
 
-namespace mvc.Controllers;
+namespace MVC_cours_isitech.Controllers;
 
 public class StudentController : Controller
 {

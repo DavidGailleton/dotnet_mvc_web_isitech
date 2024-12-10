@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 
-namespace mvc.Models;
+namespace MVC_cours_isitech.Models;
 
 public enum Specialities
 {
