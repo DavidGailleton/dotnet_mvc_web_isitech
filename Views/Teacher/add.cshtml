@@ -1,73 +1,31 @@
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<Teacher>
+@model Teacher
+<h1>Creation d'un nouvel enseignant</h1>
 
+<form asp-action="Add" asp-controller="Teacher" method="post">
+    @* ceci est un commentaire *@
 
+    <div class="form-group visually-hidden">
+        <label asp-for="Id"></label> <input asp-for="Id" value="0">
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Firstname"></label> <input asp-for="Firstname">
+        <span asp-validation-for="Firstname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lastname"></label> <input asp-for="Lastname">
+        <span asp-validation-for="Lastname" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="BirthDate"></label> <input type="date" asp-for="BirthDate">
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Speciality"></label> <input asp-for="Speciality">
+        <span asp-validation-for="Speciality" class="text-danger"></span>
+    </div>
 
-<h1>Liste des enseignants</h1>
+    <input type="submit" value="Creation d'un enseignant" class="btn btn-primary">
+</form>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Prenom</th>
-            <th>Nom</th>
-            <th>Age</th>
-            <th>Specialité</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var teacher in Model)
-    {
-        <tr>
-            <form asp-controller="Teacher" asp-action="Edit">
-                <td>@teacher.Id</td>
-                <td><input type="text" name="firstname" value="@teacher.Firstname" class="input-group-text"></td>
-                <td><input type="text" name="lastname" value="@teacher.Lastname" class="input-group-text"></td>
-                <td><input type="number" name="age" value="@teacher.Age" class="input-group-text"></td>
-                <td>
-                    <select name="speciality" class="input-group input-group-text">
-                        <option value="@Specialities.IT" id="@Specialities.IT-@teacher.Id">IT</option>
-                        <option value="@Specialities.CS" id="@Specialities.CS-@teacher.Id">CS</option>
-                        <option value="@Specialities.Other" id="@Specialities.Other-@teacher.Id">Other</option>
-                    </select>
-                    <script>document.getElementById("@teacher.Speciality-@teacher.Id").selected = "true"</script>
-                </td>
-                <td>
-                    <input type="number" name="id" class="visually-hidden" value="@teacher.Id">
-                    <input type="submit" value="Modifier" class="btn btn-info">
-                </td>
-            </form>
-            <form asp-controller="Teacher" asp-action="Delete">
-                <input type="number" class="visually-hidden" name="id" value="@teacher.Id">
-                <td><input type="submit" value="Supprimer" class="btn btn-danger"></td>
-            </form>
-        </tr>
-    }
-    <tr>
-        <td></td>
-        <form asp-controller="Teacher" asp-action="Add">
-            <td><input type="text" name="firstname" class="input-group-text"></td>
-            <td><input type="text" name="lastname" class="input-group-text"></td>
-            <td><input type="number" name="age" class="input-group-text"></td>
-            <td>
-                <select name="speciality" class="input-group input-group-text">
-                    <option value="" selected disabled hidden>Selectionnez une specialitée</option>
-                    <option value="@Specialities.IT">IT</option>
-                    <option value="@Specialities.CS">CS</option>
-                    <option value="@Specialities.Other">Other</option>
-                </select>
-            </td>
-            <td><input type="submit" value="Créer" class="btn btn-success"></td>
-            <td></td>
-        </form>
-    </tr>
-    <tr>
-        <td></td>
-        <td class="text-danger">Le prénom doit contenir maximum 20 caractères</td>
-        <td class="text-danger">Le nom doit contenir maximum 20 caractères</td>
-        <td></td>
-        <td class="text-danger">Veuillez séléctionner une spécialitée valide</td>
-    <tr/>
-    </tbody>
-</table>
+<div class="text-danger" asp-validation-summary="All"></div>

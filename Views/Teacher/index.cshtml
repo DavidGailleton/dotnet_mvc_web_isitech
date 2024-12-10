@@ -1,4 +1,8 @@
+@using Microsoft.AspNetCore.Mvc.RazorPages
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using MVC_cours_isitech.Controllers
+@using MVC_cours_isitech.Models
 @model IEnumerable<Teacher>
 
 
@@ -11,7 +15,7 @@
             <th>ID</th>
             <th>Prenom</th>
             <th>Nom</th>
-            <th>Age</th>
+            <th>Date de naissance</th>
             <th>Specialité</th>
             <th></th>
         </tr>
@@ -20,13 +24,13 @@
     @foreach (var teacher in Model)
     {
         <tr>
-            <form asp-controller="Teacher" asp-action="Edit">
-                <td>@teacher.Id</td>
-                <td><input type="text" name="firstname" value="@teacher.Firstname" class="input-group-text"></td>
-                <td><input type="text" name="lastname" value="@teacher.Lastname" class="input-group-text"></td>
-                <td><input type="number" name="age" value="@teacher.Age" class="input-group-text"></td>
+            <form asp-controller="Teacher" asp-action="Edit" method="post">
+                <td><h2>@teacher.Id</h2><input type="hidden" asp-for="@teacher.Id" key></td>
+                <td><input value="@teacher.Firstname" class="input-group-text" asp-for="@teacher.Firstname"></td>
+                <td><input value="@teacher.Lastname" class="input-group-text" asp-for="@teacher.Lastname"></td>
+                <td><input type="date" value="@teacher.BirthDate.Year-@teacher.BirthDate.Month.ToString("00")-@teacher.BirthDate.Day.ToString("00")" class="input-group-text" asp-for="@teacher.BirthDate"></td>
                 <td>
-                    <select name="speciality" class="input-group input-group-text">
+                    <select class="input-group input-group-text" asp-for="@teacher.Speciality">
                         <option value="@Specialities.IT" id="@Specialities.IT-@teacher.Id">IT</option>
                         <option value="@Specialities.CS" id="@Specialities.CS-@teacher.Id">CS</option>
                         <option value="@Specialities.Other" id="@Specialities.Other-@teacher.Id">Other</option>
@@ -34,33 +38,19 @@
                     <script>document.getElementById("@teacher.Speciality-@teacher.Id").selected = "true"</script>
                 </td>
                 <td>
-                    <input type="number" name="id" class="visually-hidden" value="@teacher.Id">
                     <input type="submit" value="Modifier" class="btn btn-info">
                 </td>
             </form>
-            <form asp-controller="Teacher" asp-action="Delete">
-                <input type="number" class="visually-hidden" name="id" value="@teacher.Id">
+            <form asp-controller="Teacher" method="post" asp-action="Delete">
+                <input type="number" class="visually-hidden" name="id" value="@teacher.Id" asp-for="@teacher.Id">
                 <td><input type="submit" value="Supprimer" class="btn btn-danger"></td>
             </form>
         </tr>
     }
-    <tr>
-        <td></td>
-        <form asp-controller="Teacher" asp-action="Add">
-            <td><input type="text" name="firstname" class="input-group-text"></td>
-            <td><input type="text" name="lastname" class="input-group-text"></td>
-            <td><input type="number" name="age" class="input-group-text"></td>
-            <td>
-                <select name="speciality" class="input-group input-group-text">
-                    <option value="" selected disabled hidden>Selectionner une specialitée</option>
-                    <option value="@Specialities.IT">IT</option>
-                    <option value="@Specialities.CS">CS</option>
-                    <option value="@Specialities.Other">Other</option>
-                </select>
-            </td>
-            <td><input type="submit" value="Créer" class="btn btn-success"></td>
-            <td></td>
-        </form>
-    </tr>
     </tbody>
+    <br>
+    <form asp-controller="Teacher" method="get" asp-action="Add">
+        <input type="submit" class="btn btn-primary" value="Créer un utilisateur">
+    </form>
+    <br>
 </table>

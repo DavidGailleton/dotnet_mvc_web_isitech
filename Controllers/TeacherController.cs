@@ -1,58 +1,62 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MVC_cours_isitech.data;
 using MVC_cours_isitech.Models;
 
 namespace MVC_cours_isitech.Controllers;
 
 public class TeacherController : Controller
 {
-    public static List<Teacher> Teachers = new()
+    private readonly ApplicationDbContext _context;
+    
+    public TeacherController(ApplicationDbContext context)
     {
-        new() { Id = 0, Firstname = "Mounir", Lastname = "BENDHAMED", Age = 32, Speciality = Specialities.IT },
-        new() { Id = 1, Firstname = "David", Lastname = "GAILLETON", Age = 20, Speciality = Specialities.CS }
-    };
-
+        _context = context;
+    }
+    
     [HttpGet]
     public ActionResult Add()
     {
-        return View(Teachers);
+        return View();
     }
     
     [HttpPost]
-    public ActionResult Add(string firstname, string lastname, int age, Specialities speciality)
+    public ActionResult Add(Teacher teacher)
     {
         if (!ModelState.IsValid)
         {
-            return View(Teachers);
+            return View();
         }
         
-        int id = Teachers.Last().Id + 1;
+        _context.Teachers.Add(teacher);
         
-        Teachers.Add(new Teacher() { Id = id, Firstname = firstname, Lastname = lastname.ToUpperInvariant(), Age = age, Speciality = speciality });
-     
+        _context.SaveChanges();
+        
         return RedirectToAction(nameof(Index));
     }
 
     public ActionResult Delete(int id)
     {
-        int index = Teachers.FindIndex(teacher => teacher.Id == id);
-        Teachers.RemoveAt(index);
+        _context.Teachers.Remove(_context.Teachers.Find(id));
+        
+        _context.SaveChanges();
         
         return RedirectToAction(nameof(Index));
     }
 
-    public ActionResult Edit(int id, string firstname, string lastname, int age, Specialities speciality)
+    public ActionResult Edit(Teacher teacher)
     {
-        int index = Teachers.FindIndex(teacher => teacher.Id == id);
-        Teachers[index].Firstname = firstname;
-        Teachers[index].Lastname = lastname;
-        Teachers[index].Age = age;
-        Teachers[index].Speciality = speciality;
+        if (ModelState.IsValid)
+        {
+            _context.Update(teacher);
+            _context.SaveChanges();
+        }
         
         return RedirectToAction(nameof(Index));
     }
 
     public ActionResult Index()
     {
-        return View(Teachers);
+        return View(_context.Teachers.ToList());
     }
 }
