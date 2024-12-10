@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVC_cours_isitech.Models;
 
@@ -7,6 +8,7 @@ public enum Specialities
     IT = 0, CS = 1, Other = 3
 }
 
+[PrimaryKey("PersonId")]
 public class Teacher : IPerson  
 {
     [Required]
