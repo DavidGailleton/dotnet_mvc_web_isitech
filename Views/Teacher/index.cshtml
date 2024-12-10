@@ -1,0 +1,67 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using mvc.Models
+@model IEnumerable<mvc.Models.Teacher>
+
+
+
+<h1>Liste des enseignants</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Prenom</th>
+            <th>Nom</th>
+            <th>Age</th>
+            <th>Specialité</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var teacher in Model)
+    {
+        <tr>
+            <form asp-controller="Teacher" asp-action="Edit">
+                <td>@teacher.PersonId</td>
+                <td><input type="text" name="firstname" value="@teacher.Firstname" class="input-group-text"></td>
+                <td><input type="text" name="lastname" value="@teacher.Lastname" class="input-group-text"></td>
+                <td><input type="number" name="age" value="@teacher.Age" class="input-group-text"></td>
+                <td>
+                    @*<select name="speciality" class="input-group-text">
+                        @{
+                            var enumValues = Enum.GetValues(typeof(Specialities));
+                        }
+                        @foreach (var enumValue: Specialities in enumValues)
+                        {
+                            if (@teacher.Speciality == enumValue)
+                            {
+                                
+                            }
+                            <option value=@enumValue>@enumValue.ToString()</option>
+                        }
+                    </select>*@
+                </td>
+                <td>
+                    <input type="number" name="id" class="visually-hidden" value="@teacher.PersonId">
+                    <input type="submit" value="Modifier" class="btn btn-info">
+                </td>
+            </form>
+            <form asp-controller="Teacher" asp-action="Delete">
+                <input type="number" class="visually-hidden" name="id" value="@teacher.PersonId">
+                <td><input type="submit" value="Supprimer" class="btn btn-danger"></td>
+            </form>
+        </tr>
+    }
+    <tr>
+        <td></td>
+        <form asp-controller="Teacher" asp-action="Add">
+            <td><input type="text" name="firstname" class="input-group-text"></td>
+            <td><input type="text" name="lastname" class="input-group-text"></td>
+            <td><input type="number" name="age" class="input-group-text"></td>
+            <td><input type="text" name="speciality" class="input-group-text"></td>
+            <td><input type="submit" value="Créer" class="btn btn-success"></td>
+            <td></td>
+        </form>
+    </tr>
+    </tbody>
+</table>

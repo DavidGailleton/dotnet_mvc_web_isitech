@@ -1,0 +1,26 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<mvc.Models.Student>
+
+<h1>Bonjour depuis /Student/Index</h1>
+<p>Voici les informations de l'étudiant :</p>
+<ul>
+    @foreach (var student in Model)
+    {
+        <li>Nom : @student.Firstname, Prenom : @student.Lastname</li>
+    }
+</ul>
+
+<h2>Ajouter un étudiant</h2>
+
+<form method="post">
+    <label for="Firstname">Prenom : </label>
+    <input type="text" name="Fristname">
+    <br>
+    <label for="Lastname">Nom : </label>
+    <input type="text" name="Lastname">
+    <br>
+    <label for="Age">Age : </label>
+    <input type="number" name="Age">
+    <br>
+    <input type="submit">
+</form>
