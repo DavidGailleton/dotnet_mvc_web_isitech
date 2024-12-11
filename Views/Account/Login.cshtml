@@ -10,13 +10,13 @@
     <h2 class="card-title">Login</h2>
     <br><br>
     <form class="align-items-center" asp-controller="Account" asp-action="Login" method="post">
-        <label asp-for="Email">Email</label>
+        <label>Email</label>
         <br>
-        <input class="input-group-text" type="email" asp-for="Email">
+        <input class="input-group-text" type="email" name="email">
         <br>
-        <label asp-for="Password">Password</label>
+        <label>Password</label>
         <br>
-        <input class="input-group-text" type="password" asp-for="Password">
+        <input class="input-group-text" type="password" name="password">
         <br>
         <br>
         <input type="submit" class="btn btn-primary" value="Login">

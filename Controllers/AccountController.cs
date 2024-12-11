@@ -62,20 +62,26 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(AccountViewModel model)
+    public async Task<IActionResult> Login(string email, string password)
     {
         if (!ModelState.IsValid)
-        {
-            return View(model);
+        {            
+            Console.WriteLine("model_error");
+
+            return View();
         }
         
-        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+        var user = await _userManager.FindByEmailAsync(email);
+        
+        var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
 
         if (result.Succeeded)
         {
             return RedirectToAction("Index", "Home");
         }
         
-        return View(model);
+        Console.WriteLine("login_error");
+        
+        return View();
     }
 }
