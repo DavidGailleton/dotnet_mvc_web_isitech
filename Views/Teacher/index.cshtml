@@ -28,21 +28,12 @@
                 <td><h2>@teacher.Id</h2><input type="hidden" asp-for="@teacher.Id" key></td>
                 <td><input value="@teacher.Firstname" class="input-group-text" asp-for="@teacher.Firstname"></td>
                 <td><input value="@teacher.Lastname" class="input-group-text" asp-for="@teacher.Lastname"></td>
-                <td><input type="date" value="@teacher.BirthDate.Year-@teacher.BirthDate.Month.ToString("00")-@teacher.BirthDate.Day.ToString("00")" class="input-group-text" asp-for="@teacher.BirthDate"></td>
-                <td>
-                    <select class="input-group input-group-text" asp-for="@teacher.Speciality">
-                        <option value="@Specialities.IT" id="@Specialities.IT-@teacher.Id">IT</option>
-                        <option value="@Specialities.CS" id="@Specialities.CS-@teacher.Id">CS</option>
-                        <option value="@Specialities.Other" id="@Specialities.Other-@teacher.Id">Other</option>
-                    </select>
-                    <script>document.getElementById("@teacher.Speciality-@teacher.Id").selected = "true"</script>
-                </td>
                 <td>
                     <input type="submit" value="Modifier" class="btn btn-info">
                 </td>
             </form>
             <form asp-controller="Teacher" method="post" asp-action="Delete">
-                <input type="number" class="visually-hidden" name="id" value="@teacher.Id" asp-for="@teacher.Id">
+                <input type="text" class="visually-hidden" name="id" value="@teacher.Id" asp-for="@teacher.Id">
                 <td><input type="submit" value="Supprimer" class="btn btn-danger"></td>
             </form>
         </tr>

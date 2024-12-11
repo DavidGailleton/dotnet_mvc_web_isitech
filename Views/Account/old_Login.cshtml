@@ -1,0 +1,16 @@
+@model AccountViewModel
+
+
+<h1>Login</h1>
+
+<br>
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    <label for="">EMail</label>
+    <input type="email" asp-for="Email">
+    <br>
+    <label for="">Password</label>
+    <input type="password" asp-for="Password">
+    <br>
+    <input type="submit">
+</form>

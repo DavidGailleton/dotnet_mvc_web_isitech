@@ -1,26 +1,19 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MVC_cours_isitech.Models;
 
 
-[PrimaryKey("Id")]
-public class Teacher : IPerson  
+public class Teacher : IdentityUser
 {
-    
-    public int? Id { get; set; }
-    
-    [Required]
-    [MaxLength(20)]
-    public string? Firstname { get; set; }
-    
-    [Required]
-    [MaxLength(20)]
-    public string? Lastname { get; set; }
-    
-    [Required]
-    public DateOnly BirthDate { get; set; }
-    
-    [Required]
-    public Specialities Speciality { get; set; }
+    // [Required(ErrorMessage = "L'identifiant est obligatoire")]
+    // [Display(Name = "Identifiant")]
+    // public int Id { get; set; }
+
+    [StringLength(20, MinimumLength = 5)]
+    public string Lastname { get; set; }
+    public string Firstname { get; set; }
+
+
 }

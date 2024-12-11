@@ -1,0 +1,22 @@
+@model AccountViewModel
+
+<h1>Register</h1>
+
+<form asp-controller="Account" asp-action="Register" method="post">
+    <label for="">Firstname</label>
+    <input asp-for="Firstname">
+    <br>
+    <label for="">Lastname</label>
+    <input asp-for="Lastname">
+    <br>
+    <label for="">Email</label>
+    <input type="email" asp-for="Email">
+    <br>
+    <label for="">Password</label>
+    <input type="password" asp-for="Password">
+    <br>
+    <label for="">Confirm Password</label>
+    <input type="password" asp-for="ConfirmedPassword">
+    <br>
+    <input type="submit" value="Register">
+</form>

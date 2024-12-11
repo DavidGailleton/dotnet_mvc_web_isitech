@@ -28,35 +28,36 @@ public class TeacherController : Controller
             return View();
         }
         
-        _context.Teachers.Add(teacher);
+        _context.Users.Add(teacher);
         
         _context.SaveChanges();
         
         return RedirectToAction(nameof(Index));
     }
 
-    public ActionResult Delete(int id)
+    public IActionResult Delete(string id)
     {
-        _context.Teachers.Remove(_context.Teachers.Find(id));
+        var teacher = _context.Users.Find(id);
         
+        _context.Users.Remove(teacher);
         _context.SaveChanges();
         
         return RedirectToAction(nameof(Index));
     }
 
-    public ActionResult Edit(Teacher teacher)
+    public IActionResult Edit(Teacher teacher)
     {
         if (ModelState.IsValid)
         {
-            _context.Update(teacher);
+            _context.Users.Update(teacher);
             _context.SaveChanges();
         }
         
         return RedirectToAction(nameof(Index));
     }
 
-    public ActionResult Index()
+    public IActionResult Index()
     {
-        return View(_context.Teachers.ToList());
+        return View(_context.Users.ToList());
     }
 }

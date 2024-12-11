@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC_cours_isitech.data;
+using MVC_cours_isitech.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,18 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(11, 6, 2)))
 );
+
+builder.Services.AddIdentity<Teacher, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 12;
+    
+    options.User.RequireUniqueEmail = true;
+}).AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
 
@@ -20,6 +34,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
 app.UseStaticFiles();
 
 app.UseRouting();
