@@ -5,20 +5,24 @@
     Layout = "_Layout";
 }
 
-<h2>Login</h2>
 
-<div class="align-content-center border-dark border-1 box-shadow">
-    <form asp-controller="Account" asp-action="Login" method="post">
+<div class="m-auto p-5 border border-secondary rounded-3 border-1 box-shadow shadow align-items-center align-content-center">
+    <h2 class="card-title">Login</h2>
+    <br><br>
+    <form class="align-items-center" asp-controller="Account" asp-action="Login" method="post">
         <label asp-for="Email">Email</label>
         <br>
-        <input type="email" asp-for="Email">
-        <br>
+        <input class="input-group-text" type="email" asp-for="Email">
         <br>
         <label asp-for="Password">Password</label>
         <br>
-        <input type="password" asp-for="Password">
+        <input class="input-group-text" type="password" asp-for="Password">
         <br>
         <br>
-        <input type="submit">
+        <input type="submit" class="btn btn-primary" value="Login">
+    </form>
+    <br>
+    <form asp-action="Register" method="get" asp-controller="Account">
+        <input type="submit" class="btn btn-secondary" value="Register">
     </form>
 </div>
