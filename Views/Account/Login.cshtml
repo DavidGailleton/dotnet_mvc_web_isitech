@@ -1,0 +1,34 @@
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+<div class="m-auto p-5 border border-secondary rounded-3 border-1 box-shadow shadow align-items-center align-content-center">
+    <h2 class="card-title">Login</h2>
+    <br><br>
+    <form class="align-items-center" asp-controller="Account" asp-action="Login" method="post">
+        <label asp-for="Email">Email</label>
+        <br>
+        <input class="input-group-text" type="email" asp-for="Email">
+        <br>
+        <label asp-for="Password">Password</label>
+        <br>
+        <input class="input-group-text" type="password" asp-for="Password">
+        <br>
+        <label asp-for="StayConnected">Stay connected ?</label>
+        <br>
+        <input class="input-group-text" type="checkbox" asp-for="StayConnected">
+        <br>
+        <br>
+        <input type="submit" class="btn btn-primary" value="Login">
+    </form>
+    <br>
+    <form asp-action="RegisterStudent" method="get" asp-controller="Account">
+    <input type="submit" class="btn btn-secondary" value="Register as a Student">
+    </form>
+    <form asp-action="RegisterTeacher" method="get" asp-controller="Account">
+    <input type="submit" class="btn btn-secondary" value="Register as a Teacher">
+    </form>
+</div>
