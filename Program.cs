@@ -11,7 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(11, 6, 2)))
 );
 
-builder.Services.AddIdentity<Teacher, IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequireDigit = true;
