@@ -179,7 +179,97 @@ public class ApplicationDbContext : IdentityDbContext<User>
             MaxParticipants = 120,
             Location = "Salle de Conférence C",
             CreatedAt = DateTime.Now.AddDays(-15)
-        }
+        },
+        new() {
+   Id = 6,
+   Title = "Game Jam - Création de Jeux Vidéo",
+   Description = "Un weekend complet dédié à la création de jeux vidéo. Venez avec vos idées et repartez avec un prototype jouable !",
+   EventDate = DateTime.Now.AddDays(45),
+   MaxParticipants = 60,
+   Location = "Espace Gaming",
+   CreatedAt = DateTime.Now.AddDays(-2)
+},
+new() {
+   Id = 7,
+   Title = "Workshop Data Science",
+   Description = "Initiation pratique à Python et aux bibliothèques de data science (Pandas, NumPy, Scikit-learn)",
+   EventDate = DateTime.Now.AddDays(10),
+   MaxParticipants = 30,
+   Location = "Laboratoire Data",
+   CreatedAt = DateTime.Now.AddDays(-8)
+},
+new() {
+   Id = 8,
+   Title = "Cloud Computing - AWS Basics",
+   Description = "Découvrez les services fondamentaux d'Amazon Web Services et déployez votre première application",
+   EventDate = DateTime.Now.AddDays(15),
+   MaxParticipants = 40,
+   Location = "Salle Cloud",
+   CreatedAt = DateTime.Now.AddDays(-4)
+},
+new() {
+   Id = 9,
+   Title = "Design Thinking Workshop",
+   Description = "Apprenez à résoudre des problèmes complexes avec la méthodologie du Design Thinking",
+   EventDate = DateTime.Now.AddDays(5),
+   MaxParticipants = 25,
+   Location = "Studio Design",
+   CreatedAt = DateTime.Now.AddDays(-6)
+},
+new() {
+   Id = 10,
+   Title = "Mobile App Development",
+   Description = "Formation intensive sur le développement d'applications mobiles avec Flutter",
+   EventDate = DateTime.Now.AddDays(60),
+   MaxParticipants = 35,
+   Location = "Lab Mobile",
+   CreatedAt = DateTime.Now.AddDays(-1)
+},
+new() {
+   Id = 11,
+   Title = "Network Security Masterclass",
+   Description = "Une journée dédiée à la sécurité des réseaux et aux bonnes pratiques",
+   EventDate = DateTime.Now.AddDays(25),
+   MaxParticipants = 45,
+   Location = "Salle Sécurité",
+   CreatedAt = DateTime.Now.AddDays(-3)
+},
+new() {
+   Id = 12,
+   Title = "UX/UI Design Fundamentals",
+   Description = "Les principes essentiels du design d'interface et de l'expérience utilisateur",
+   EventDate = DateTime.Now.AddDays(12),
+   MaxParticipants = 30,
+   Location = "Design Lab",
+   CreatedAt = DateTime.Now.AddDays(-5)
+},
+new() {
+   Id = 13,
+   Title = "Agile Project Management",
+   Description = "Formation aux méthodologies agiles et à la gestion de projet moderne",
+   EventDate = DateTime.Now.AddDays(18),
+   MaxParticipants = 50,
+   Location = "Salle Agile",
+   CreatedAt = DateTime.Now.AddDays(-7)
+},
+new() {
+   Id = 14,
+   Title = "Big Data Analytics",
+   Description = "Explorez les outils et techniques d'analyse de données massives",
+   EventDate = DateTime.Now.AddDays(35),
+   MaxParticipants = 40,
+   Location = "Data Center",
+   CreatedAt = DateTime.Now.AddDays(-9)
+},
+new() {
+   Id = 15,
+   Title = "IoT Workshop",
+   Description = "Création de projets connectés avec Arduino et Raspberry Pi",
+   EventDate = DateTime.Now.AddDays(28),
+   MaxParticipants = 20,
+   Location = "Lab IoT",
+   CreatedAt = DateTime.Now.AddDays(-4)
+}
     };
 
     modelBuilder.Entity<Teacher>().HasData(teachers);
