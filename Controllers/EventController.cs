@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVC_cours_isitech.data;
 using MVC_cours_isitech.Models;
 
@@ -16,9 +17,31 @@ public class EventController : Controller
     }
     
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index(string searchString, DateTime? searchDate)
     {
-        var events = _context.Events.ToList();
+        var eventsQuery = _context.Events.AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            eventsQuery = eventsQuery.Where(e => 
+                e.Title.Contains(searchString) || 
+                e.Description.Contains(searchString));
+        }
+
+        if (searchDate.HasValue)
+        {
+            var date = searchDate.Value.Date;
+            eventsQuery = eventsQuery.Where(e => 
+                e.EventDate.Date == date);
+        }
+
+        eventsQuery = eventsQuery.OrderByDescending(e => e.EventDate);
+        var events = await eventsQuery.ToListAsync();
+
+        // Stocker les valeurs de recherche dans ViewData
+        ViewData["CurrentSearch"] = searchString;
+        ViewData["CurrentDate"] = searchDate?.ToString("yyyy-MM-dd");
+
         return View(events);
     }
     
