@@ -59,40 +59,7 @@ namespace MVC_cours_isitech.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("MVC_cours_isitech.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AdmissionDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<double>("GPA")
-                        .HasColumnType("double");
-
-                    b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Major")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("MVC_cours_isitech.Models.Teacher", b =>
+            modelBuilder.Entity("MVC_cours_isitech.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -104,6 +71,14 @@ namespace MVC_cours_isitech.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -113,12 +88,12 @@ namespace MVC_cours_isitech.Migrations
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -163,6 +138,10 @@ namespace MVC_cours_isitech.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("User");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -297,6 +276,26 @@ namespace MVC_cours_isitech.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MVC_cours_isitech.Models.Student", b =>
+                {
+                    b.HasBaseType("MVC_cours_isitech.Models.User");
+
+                    b.Property<string>("Major")
+                        .HasColumnType("longtext");
+
+                    b.HasDiscriminator().HasValue("Student");
+                });
+
+            modelBuilder.Entity("MVC_cours_isitech.Models.Teacher", b =>
+                {
+                    b.HasBaseType("MVC_cours_isitech.Models.User");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("longtext");
+
+                    b.HasDiscriminator().HasValue("Teacher");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -308,7 +307,7 @@ namespace MVC_cours_isitech.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MVC_cours_isitech.Models.Teacher", null)
+                    b.HasOne("MVC_cours_isitech.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -317,7 +316,7 @@ namespace MVC_cours_isitech.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MVC_cours_isitech.Models.Teacher", null)
+                    b.HasOne("MVC_cours_isitech.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -332,7 +331,7 @@ namespace MVC_cours_isitech.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MVC_cours_isitech.Models.Teacher", null)
+                    b.HasOne("MVC_cours_isitech.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -341,7 +340,7 @@ namespace MVC_cours_isitech.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MVC_cours_isitech.Models.Teacher", null)
+                    b.HasOne("MVC_cours_isitech.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
