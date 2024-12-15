@@ -165,11 +165,143 @@ public class AccountController : Controller
     }
     
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Teacher" )]
     public async Task<IActionResult> Index()
     {
-        var accounts = await _userManager.Users.ToListAsync();
-        return View(accounts);
+        var users = await _userManager.Users
+            .ToListAsync();
+
+        var userRoles = new Dictionary<string, string>();
+        foreach (var user in users)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            userRoles[user.Id] = roles.FirstOrDefault() ?? "";
+        }
+
+        ViewBag.UserRoles = userRoles;
+    
+        return View(users);
+    }
+
+    [Authorize(Roles = "Admin,Teacher")]
+    [HttpGet]
+    public async Task<IActionResult> Edit(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var model = new EditUserViewModel
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Firstname = user.Firstname,
+            Lastname = user.Lastname,
+            DateOfBirth = user.DateOfBirth
+        };
+
+        // Si c'est un étudiant
+        if (user is Student student)
+        {
+            model.Major = student.Major;
+            model.Role = "Student";
+        }
+        // Si c'est un professeur
+        else if (user is Teacher teacher)
+        {
+            model.Subject = teacher.Subject;
+            model.Role = "Teacher";
+        }
+
+        return View(model);
+    }
+    
+
+    [Authorize(Roles = "Admin,Teacher")]
+    [HttpPost]
+    public async Task<IActionResult> Edit(EditUserViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = await _userManager.FindByIdAsync(model.Id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        user.Email = model.Email;
+        user.Firstname = model.Firstname;
+        user.Lastname = model.Lastname;
+        user.DateOfBirth = model.DateOfBirth;
+
+        if (user is Student student && !string.IsNullOrEmpty(model.Major))
+        {
+            student.Major = model.Major;
+        }
+        else if (user is Teacher teacher && !string.IsNullOrEmpty(model.Subject))
+        {
+            teacher.Subject = model.Subject;
+        }
+
+        var result = await _userManager.UpdateAsync(user);
+        if (result.Succeeded)
+        {
+            TempData["SuccessMessage"] = "User updated successfully";
+            return RedirectToAction(nameof(Index));
+        }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
+
+        return View(model);
+    }
+    
+    [Authorize(Roles = "Admin,Teacher")]
+    [HttpPost]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            TempData["ErrorMessage"] = "User not found.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        if (User.IsInRole("Teacher"))
+        {
+            var userRoles = await _userManager.GetRolesAsync(user);
+            if (userRoles.Contains("Teacher") || userRoles.Contains("Admin"))
+            {
+                TempData["ErrorMessage"] = "You are not authorized to delete this user.";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        try
+        {
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "User successfully deleted.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Error deleting user: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            }
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = "An error occurred while deleting the user.";
+        }
+
+        return RedirectToAction(nameof(Index));
     }
     
 }
