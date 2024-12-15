@@ -16,9 +16,29 @@ public class EventController : Controller
         _context = context;
     }
     
+    private readonly int PageSize = 5;
+    
     [HttpGet]
-    public async Task<IActionResult> Index(string searchString, DateTime? searchDate)
+    public async Task<IActionResult> Index(string sortOrder, string searchString, 
+        DateTime? searchDate, int? page)
     {
+        var viewModel = new EventsViewModel();
+        
+        viewModel.CurrentSort = sortOrder;
+        viewModel.TitleSortParam = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+        viewModel.DateSortParam = sortOrder == "date" ? "date_desc" : "date";
+        
+        if (searchString != null || searchDate != null)
+            page = 1;
+        else
+        {
+            searchString = viewModel.CurrentFilter;
+            searchDate = viewModel.CurrentDateFilter;
+        }
+        
+        viewModel.CurrentFilter = searchString;
+        viewModel.CurrentDateFilter = searchDate;
+
         var eventsQuery = _context.Events.AsQueryable();
 
         if (!string.IsNullOrEmpty(searchString))
@@ -31,18 +51,38 @@ public class EventController : Controller
         if (searchDate.HasValue)
         {
             var date = searchDate.Value.Date;
-            eventsQuery = eventsQuery.Where(e => 
-                e.EventDate.Date == date);
+            eventsQuery = eventsQuery.Where(e => e.EventDate.Date == date);
         }
 
-        eventsQuery = eventsQuery.OrderByDescending(e => e.EventDate);
-        var events = await eventsQuery.ToListAsync();
+        // Appliquer le tri
+        switch (sortOrder)
+        {
+            case "title_desc":
+                eventsQuery = eventsQuery.OrderByDescending(e => e.Title);
+                break;
+            case "date":
+                eventsQuery = eventsQuery.OrderBy(e => e.EventDate);
+                break;
+            case "date_desc":
+                eventsQuery = eventsQuery.OrderByDescending(e => e.EventDate);
+                break;
+            default:
+                eventsQuery = eventsQuery.OrderBy(e => e.Title);
+                break;
+        }
 
-        // Stocker les valeurs de recherche dans ViewData
-        ViewData["CurrentSearch"] = searchString;
-        ViewData["CurrentDate"] = searchDate?.ToString("yyyy-MM-dd");
+        // Pagination
+        int pageNumber = (page ?? 1);
+        var totalItems = await eventsQuery.CountAsync();
+        viewModel.TotalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
+        viewModel.CurrentPage = pageNumber;
 
-        return View(events);
+        viewModel.Events = await eventsQuery
+            .Skip((pageNumber - 1) * PageSize)
+            .Take(PageSize)
+            .ToListAsync();
+
+        return View(viewModel);
     }
     
     [HttpGet]
