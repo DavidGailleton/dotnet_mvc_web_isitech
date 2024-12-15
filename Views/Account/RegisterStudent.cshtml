@@ -1,4 +1,4 @@
-@model AccountViewModel
+@model RegisterStudentViewModel
 
 @{
     ViewBag.Title = "Register";
@@ -29,11 +29,22 @@
         <br>
         <input class="input-group-text" type="password" asp-for="ConfirmedPassword">
         <br>
+        <label asp-for="Birthdate">Birthday</label>
+        <br>
+        <input class="input-group-text" type="date" asp-for="Birthdate">
+        <br>
+        <label asp-for="Major">Major</label>
+        <br>
+        <input class="input-group-text" type="text" asp-for="Major">
+        <br>
         <br>
         <input type="submit" class="btn btn-primary" value="Register">
     </form>
     <br>
     <form asp-action="Login" method="get" asp-controller="Account">
         <input type="submit" class="btn btn-secondary" value="login">
+    </form>
+    <form asp-action="RegisterTeacher" method="get" asp-controller="Account">
+        <input type="submit" class="btn btn-secondary" value="Register as a Teacher">
     </form>
 </div>

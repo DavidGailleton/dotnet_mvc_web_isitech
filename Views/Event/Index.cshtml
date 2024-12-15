@@ -6,28 +6,3 @@
 }
 
 <h2>Events</h2>
-<br>
-<a href="/Event/Create" class="btn btn-primary">Create</a>
-<br><br>
-<div class="flex-column-reverse d-flex">
-    @foreach (Event evnt in Model)
-    {
-        <div onclick="() => {redirect('/Event/View/@evnt.Id')}" class="card hover-shadow my-3">
-            <h5 class="card-header">@evnt.Title</h5>
-            <div class="card-body">
-                <h5 class="card-title">@evnt.EventDate - @evnt.Location</h5>
-                <p class="card-text">@evnt.Description</p>
-                <div class="flex-row d-flex">
-                    <form asp-controller="Event" asp-action="Edit" method="get">
-                        <input type="hidden" value="@evnt.Id" name="id">
-                        <input type="submit" value="Edit" class="btn btn-secondary">
-                    </form>
-                    <form asp-controller="Event" asp-action="Delete" method="post" class="mx-4">
-                        <input type="hidden" value="@evnt.Id" name="id">
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                    </form>
-                </div>
-            </div>
-        </div>
-    }
-</div>

@@ -1,0 +1,50 @@
+@model RegisterTeacherViewModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "_Layout";
+}
+
+<div class="m-auto p-5 border border-secondary rounded-3 border-1 box-shadow shadow">
+    <h2 class="card-title">Register</h2>
+    <br><br>
+    <form class="align-items-center" asp-controller="Account" asp-action="RegisterTeacher" method="post">
+        <label asp-for="Email">Email</label>
+        <br>
+        <input class="input-group-text" type="email" asp-for="Email">
+        <br>
+        <label asp-for="Firstname">Firstname</label>
+        <br>
+        <input class="input-group-text" type="text" asp-for="Firstname">
+        <br>
+        <label asp-for="Lastname">Lastname</label>
+        <br>
+        <input class="input-group-text" type="text" asp-for="Lastname">
+        <br>
+        <label asp-for="Password">Password</label>
+        <br>
+        <input class="input-group-text" type="password" asp-for="Password">
+        <br>
+        <label asp-for="ConfirmedPassword">Confirm Password</label>
+        <br>
+        <input class="input-group-text" type="password" asp-for="ConfirmedPassword">
+        <br>
+        <label asp-for="Birthdate">BirthDay</label>
+        <br>
+        <input class="input-group-text" type="date" asp-for="Birthdate">
+        <br>
+        <label asp-for="Subject">Subject</label>
+        <br>
+        <input class="input-group-text" type="text" asp-for="Subject">
+        <br>
+        <br>
+        <input type="submit" class="btn btn-primary" value="Register">
+    </form>
+    <br>
+    <form asp-action="Login" method="get" asp-controller="Account">
+        <input type="submit" class="btn btn-secondary" value="login">
+    </form>
+    <form asp-action="RegisterStudent" method="get" asp-controller="Account">
+        <input type="submit" class="btn btn-secondary" value="Register as a Student">
+    </form>
+</div>
