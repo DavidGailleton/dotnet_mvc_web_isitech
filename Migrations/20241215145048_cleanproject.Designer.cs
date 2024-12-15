@@ -4,6 +4,7 @@ using MVC_cours_isitech.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_cours_isitech.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241215145048_cleanproject")]
+    partial class cleanproject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,26 +171,6 @@ namespace MVC_cours_isitech.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "Teacher",
-                            NormalizedName = "TEACHER"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -275,18 +258,6 @@ namespace MVC_cours_isitech.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "11111111-1111-1111-1111-111111111111",
-                            RoleId = "2"
-                        },
-                        new
-                        {
-                            UserId = "22222222-2222-2222-2222-222222222222",
-                            RoleId = "3"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -316,28 +287,6 @@ namespace MVC_cours_isitech.Migrations
                         .HasColumnType("longtext");
 
                     b.HasDiscriminator().HasValue("Student");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "22222222-2222-2222-2222-222222222222",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5bf77ef9-739d-459e-9011-88b819e08e92",
-                            DateOfBirth = new DateOnly(2004, 12, 15),
-                            Email = "student@example.com",
-                            EmailConfirmed = true,
-                            Firstname = "Jane",
-                            Lastname = "Smith",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "STUDENT@EXAMPLE.COM",
-                            NormalizedUserName = "STUDENT@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFcy1illQyHC6HtOQlHGzHDavIOK2rsHYXYh4VpSPS2xKoehfcWY44ZQrDdiQnui7Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "student@example.com",
-                            Major = "Computer Science"
-                        });
                 });
 
             modelBuilder.Entity("MVC_cours_isitech.Models.Teacher", b =>
@@ -348,28 +297,6 @@ namespace MVC_cours_isitech.Migrations
                         .HasColumnType("longtext");
 
                     b.HasDiscriminator().HasValue("Teacher");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "11111111-1111-1111-1111-111111111111",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "6dce7eb8-1a57-4774-9ef3-2dcb1ee572e8",
-                            DateOfBirth = new DateOnly(1994, 12, 15),
-                            Email = "teacher@example.com",
-                            EmailConfirmed = true,
-                            Firstname = "John",
-                            Lastname = "Doe",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "TEACHER@EXAMPLE.COM",
-                            NormalizedUserName = "TEACHER@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN4hPXwGu0udXkoQaoLPGRUuq9oLH6GA5fnrv7C0x5FCx+0dX/OoOf31WS6ur8VL3Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "teacher@example.com",
-                            Subject = "Computer Science"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
