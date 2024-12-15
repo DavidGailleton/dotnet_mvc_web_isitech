@@ -11,9 +11,12 @@ public class EventController : Controller
 {
     private readonly ApplicationDbContext _context;
     
-    public EventController(ApplicationDbContext context)
+    private readonly IPdfService _pdfService;
+
+    public EventController(ApplicationDbContext context, IPdfService pdfService)
     {
         _context = context;
+        _pdfService = pdfService;
     }
     
     private readonly int PageSize = 5;
@@ -137,5 +140,25 @@ public class EventController : Controller
         var @event = _context.Events.Find(id);
         
         return View(@event);
+    }
+
+    [HttpGet]
+    public IActionResult ExportAllToPdf()
+    {
+        var events = _context.Events.OrderBy(e => e.EventDate).ToList();
+        var pdfBytes = _pdfService.GenerateEventsPdf(events);
+    
+        return File(pdfBytes, "application/pdf", "events.pdf");
+    }
+
+    [HttpGet]
+    public IActionResult ExportEventToPdf(int id)
+    {
+        var evt = _context.Events.Find(id);
+        if (evt == null)
+            return NotFound();
+        
+        var pdfBytes = _pdfService.GenerateEventDetailPdf(evt);
+        return File(pdfBytes, "application/pdf", $"event-{evt.Title}.pdf");
     }
 }

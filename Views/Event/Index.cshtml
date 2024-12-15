@@ -22,6 +22,11 @@
             </div>
         </form>
     </div>
+    <div class="mb-3">
+        <a asp-action="ExportAllToPdf" class="btn btn-secondary">
+            <i class="bi bi-file-pdf"></i> Export All to PDF
+        </a>
+    </div>
 </div>
 
 @if (User.IsInRole("Teacher"))

@@ -29,6 +29,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
+builder.Services.AddScoped<IPdfService, PdfService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
